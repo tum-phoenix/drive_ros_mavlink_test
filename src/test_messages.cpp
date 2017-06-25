@@ -175,62 +175,91 @@ int main(int argc, char **argv) {
     initPublisher(n);
 
     std::vector<int> choices;
-    int pos = -1;
+    int pos = -2;
 
 	bool close = false;
 	while(!close)
 	{
 		ros::spinOnce();
 
-		writeOptions();
+		if(pos == -2)
+		{
+			writeOptions();
+		}
         int choice = -1;
         char buffer[10];
         system ("/bin/stty raw");
         choice = getchar();
         system ("/bin/stty cooked");
         int c;
-        std::cout << choice << "\n";
-        if(choice == 65)
+        //std::cout << "\n" << int(choice) << "\n";
+        if(choice == 3 || choice == 4 || choice == 26)
         {
-            if(pos == -1)
-            {
-                pos = choices.size() - 1;
-            }
-            else
-            {
-                pos--;
-            }
-            if(pos != -1)
-            {
-                std::cout << "\n";
-                writeOptions();
-                std::cout << int(choices[pos]);
-            }
-
+        	std::cout << "\n";
+        	return 0;
         }
-        else if(choice == 66)
+        if(choice == 27)
         {
-            if(pos == -1)
-            {
-                pos = 0;
-            }
-            if(pos < choices.size())
-            {
-                std::cout << "\n";
-                writeOptions();
-                std::cout << int(choices[pos]);
-            }
+        	int c = getchar();
+        	std::cout << int(c) << "\n";
+        	if(c == 91)
+        	{
+        		int d = getchar();
+        		std::cout << int(d) << "\n";
+				if(d == 65)
+				{
+					if(pos == -2)
+					{
+						pos = choices.size() - 1;
+					}
+					else if(pos == -1 && choices.size() > 0)
+					{
+						pos = 0;
+					}
+					else
+					{
+						pos--;
+					}
+					if(pos != -1)
+					{
+						std::cout << "\n";
+						writeOptions();
+						std::cout << int(choices[pos]);
+					}
+
+				}
+				else if(d == 66)
+				{
+					if(pos == -2)
+					{
+						pos = 0;
+					}
+					else
+					{
+						pos++;
+					}
+					if(pos == choices.size() && choices.size() > 0)
+					{
+						pos = choices.size() -1;
+					}
+					if(pos < choices.size())
+					{
+						std::cout << "\n";
+						writeOptions();
+						std::cout << int(choices[pos]);
+					}
+				}
+        	}
         }
         else
         {
             std::cout << "\n";
-            if(pos != -1)
+            if(pos != -2)
             {
                 choice = choices[pos];
-                pos = -1;
+                pos = -2;
             }
             if(choice > 47) choice -= 48;
-            if(choice == 10) choice = 0;
             choices.push_back(choice);
 
             switch (choice)
