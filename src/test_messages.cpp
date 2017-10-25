@@ -1,10 +1,10 @@
 #include <ros/ros.h>
-#include <mavlink_phoenix/mavlink2ros.h>
 #include <iostream>
 #include <vector>
 #include <string>
 #include <stdio.h>
 #include <cstdlib>
+#include "drive_ros_mavlink_cc2016/mavlink2ros.h"
 
 
 ros::Publisher publisherCommand;
@@ -45,7 +45,7 @@ float getRandFloat()
 
 bool sendConfigParamSetBool()
 {
-  mavlink_phoenix::CONFIG_PARAM_SET_BOOL msg;
+  drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_BOOL msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.config_id = getRand();
@@ -60,7 +60,7 @@ bool sendConfigParamSetBool()
 
 bool sendConfigParamSetFloat()
 {
-  mavlink_phoenix::CONFIG_PARAM_SET_FLOAT msg;
+  drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_FLOAT msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.config_id = getRand();
@@ -73,7 +73,7 @@ bool sendConfigParamSetFloat()
 
 bool sendConfigParamSetInt()
 {
-  mavlink_phoenix::CONFIG_PARAM_SET_INT msg;
+  drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_INT msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.config_id = getRand();
@@ -86,7 +86,7 @@ bool sendConfigParamSetInt()
 
 bool sendConfigRequestCount()
 {
-  mavlink_phoenix::CONFIG_REQUEST_COUNT msg;
+  drive_ros_mavlink_cc2016::CONFIG_REQUEST_COUNT msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.dummy = getRand();
@@ -97,7 +97,7 @@ bool sendConfigRequestCount()
 
 bool sendConfigRequestParams()
 {
-  mavlink_phoenix::CONFIG_REQUEST_PARAMS msg;
+  drive_ros_mavlink_cc2016::CONFIG_REQUEST_PARAMS msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.config_id = getRand();
@@ -109,7 +109,7 @@ bool sendConfigRequestParams()
 
 bool sendConfigRequest()
 {
-  mavlink_phoenix::CONFIG_REQUEST msg;
+  drive_ros_mavlink_cc2016::CONFIG_REQUEST msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.config_id = getRand();
@@ -120,7 +120,7 @@ bool sendConfigRequest()
 
 bool sendControlCommand()
 {
-  mavlink_phoenix::CONTROL_COMMAND msg;
+  drive_ros_mavlink_cc2016::CONTROL_COMMAND msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.velocity = getRandFloat();
@@ -137,7 +137,7 @@ bool sendControlCommand()
 
 bool sendControlLights()
 {
-  mavlink_phoenix::CONTROL_LIGHTS msg;
+  drive_ros_mavlink_cc2016::CONTROL_LIGHTS msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   for(int i = 0; i < 15; i++)
@@ -159,18 +159,18 @@ bool sendControlLights()
 
 void initPublisher(ros::NodeHandle &n)
 {
-  publisherConfigParamSetBool = n.advertise<mavlink_phoenix::CONFIG_PARAM_SET_BOOL>("/to_mav/config_param_set_bool", 10);
-  publisherConfigParamSetFloat = n.advertise<mavlink_phoenix::CONFIG_PARAM_SET_FLOAT>("/to_mav/config_param_set_float", 10);
-  publisherConfigParamSetInt = n.advertise<mavlink_phoenix::CONFIG_PARAM_SET_INT>("/to_mav/config_param_set_int", 10);
-  publisherConfigRequestCount = n.advertise<mavlink_phoenix::CONFIG_REQUEST_COUNT>("/to_mav/config_request_count", 10);
-  publisherConfigRequestParams = n.advertise<mavlink_phoenix::CONFIG_REQUEST_PARAMS>("/to_mav/config_request_params", 10);
-  publisherConfigRequest = n.advertise<mavlink_phoenix::CONFIG_REQUEST>("/to_mav/request", 10);
-  publisherControlCommand = n.advertise<mavlink_phoenix::CONTROL_COMMAND>("/to_mav/control_command", 10);
-  publisherControlLights = n.advertise<mavlink_phoenix::CONTROL_LIGHTS>("/to_mav/control_lights", 10);
+  publisherConfigParamSetBool = n.advertise<drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_BOOL>("/to_mav/config_param_set_bool", 10);
+  publisherConfigParamSetFloat = n.advertise<drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_FLOAT>("/to_mav/config_param_set_float", 10);
+  publisherConfigParamSetInt = n.advertise<drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_INT>("/to_mav/config_param_set_int", 10);
+  publisherConfigRequestCount = n.advertise<drive_ros_mavlink_cc2016::CONFIG_REQUEST_COUNT>("/to_mav/config_request_count", 10);
+  publisherConfigRequestParams = n.advertise<drive_ros_mavlink_cc2016::CONFIG_REQUEST_PARAMS>("/to_mav/config_request_params", 10);
+  publisherConfigRequest = n.advertise<drive_ros_mavlink_cc2016::CONFIG_REQUEST>("/to_mav/request", 10);
+  publisherControlCommand = n.advertise<drive_ros_mavlink_cc2016::CONTROL_COMMAND>("/to_mav/control_command", 10);
+  publisherControlLights = n.advertise<drive_ros_mavlink_cc2016::CONTROL_LIGHTS>("/to_mav/control_lights", 10);
 }
 
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "mavlink_phoenix_test_node");
+  ros::init(argc, argv, "drive_ros_mavlink_cc2016_test_node");
   ros::NodeHandle n;
   ros::Rate loop_rate(100);
     initPublisher(n);
