@@ -8,7 +8,7 @@ project(drive_ros_mavlink_test)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  drive_ros_mavlink_cc2016
+  drive_ros_msgs
   roscpp
 )
 
@@ -143,7 +143,7 @@ add_executable(ros_drive_mavlink_test_node src/test_messages.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(ros_drive_mavlink_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} drive_ros_mavlink_cc2016_generate_messages_cpp)
+add_dependencies(ros_drive_mavlink_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} drive_ros_msgs_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node

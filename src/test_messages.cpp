@@ -4,7 +4,34 @@
 #include <string>
 #include <stdio.h>
 #include <cstdlib>
-#include "drive_ros_mavlink_cc2016/mavlink2ros.h"
+#include <drive_ros_msgs/mav_cc16_NOTIFICATION.h>
+#include <drive_ros_msgs/mav_cc16_HEARTBEAT.h>
+#include <drive_ros_msgs/mav_cc16_DEBUG.h>
+#include <drive_ros_msgs/mav_cc16_TELEMETRY.h>
+#include <drive_ros_msgs/mav_cc16_CONTROL_LIGHTS.h>
+#include <drive_ros_msgs/mav_cc16_CONTROL_COMMAND.h>
+#include <drive_ros_msgs/mav_cc16_IMU.h>
+#include <drive_ros_msgs/mav_cc16_ODOMETER_ABS.h>
+#include <drive_ros_msgs/mav_cc16_ODOMETER_RAW.h>
+#include <drive_ros_msgs/mav_cc16_ODOMETER_DELTA.h>
+#include <drive_ros_msgs/mav_cc16_ODOMETER_DELTA_RAW.h>
+#include <drive_ros_msgs/mav_cc16_ODOMETER.h>
+#include <drive_ros_msgs/mav_cc16_PROXIMITY.h>
+#include <drive_ros_msgs/mav_cc16_PARKING_LOT.h>
+#include <drive_ros_msgs/mav_cc16_CONFIG_REQUEST_COUNT.h>
+#include <drive_ros_msgs/mav_cc16_CONFIG_REQUEST.h>
+#include <drive_ros_msgs/mav_cc16_CONFIG_REQUEST_PARAMS.h>
+#include <drive_ros_msgs/mav_cc16_CONFIG_COUNT.h>
+#include <drive_ros_msgs/mav_cc16_CONFIG.h>
+#include <drive_ros_msgs/mav_cc16_CONFIG_PARAM_INT.h>
+#include <drive_ros_msgs/mav_cc16_CONFIG_PARAM_BOOL.h>
+#include <drive_ros_msgs/mav_cc16_CONFIG_PARAM_FLOAT.h>
+#include <drive_ros_msgs/mav_cc16_CONFIG_PARAM_SET_INT.h>
+#include <drive_ros_msgs/mav_cc16_CONFIG_PARAM_SET_BOOL.h>
+#include <drive_ros_msgs/mav_cc16_CONFIG_PARAM_SET_FLOAT.h>
+#include <drive_ros_msgs/mav_cc16_COMMAND.h>
+#include <drive_ros_msgs/mav_RAW_DATA.h>
+#include <drive_ros_msgs/mav_cc16_TIMES.h>
 
 
 ros::Publisher publisherCommand;
@@ -45,7 +72,7 @@ float getRandFloat()
 
 bool sendConfigParamSetBool()
 {
-  drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_BOOL msg;
+  drive_ros_msgs::mav_cc16_CONFIG_PARAM_SET_BOOL msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.config_id = getRand();
@@ -60,7 +87,7 @@ bool sendConfigParamSetBool()
 
 bool sendConfigParamSetFloat()
 {
-  drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_FLOAT msg;
+  drive_ros_msgs::mav_cc16_CONFIG_PARAM_SET_FLOAT msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.config_id = getRand();
@@ -73,7 +100,7 @@ bool sendConfigParamSetFloat()
 
 bool sendConfigParamSetInt()
 {
-  drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_INT msg;
+  drive_ros_msgs::mav_cc16_CONFIG_PARAM_SET_INT msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.config_id = getRand();
@@ -86,7 +113,7 @@ bool sendConfigParamSetInt()
 
 bool sendConfigRequestCount()
 {
-  drive_ros_mavlink_cc2016::CONFIG_REQUEST_COUNT msg;
+  drive_ros_msgs::mav_cc16_CONFIG_REQUEST_COUNT msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.dummy = getRand();
@@ -97,7 +124,7 @@ bool sendConfigRequestCount()
 
 bool sendConfigRequestParams()
 {
-  drive_ros_mavlink_cc2016::CONFIG_REQUEST_PARAMS msg;
+  drive_ros_msgs::mav_cc16_CONFIG_REQUEST_PARAMS msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.config_id = getRand();
@@ -109,7 +136,7 @@ bool sendConfigRequestParams()
 
 bool sendConfigRequest()
 {
-  drive_ros_mavlink_cc2016::CONFIG_REQUEST msg;
+  drive_ros_msgs::mav_cc16_CONFIG_REQUEST msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.config_id = getRand();
@@ -120,7 +147,7 @@ bool sendConfigRequest()
 
 bool sendControlCommand()
 {
-  drive_ros_mavlink_cc2016::CONTROL_COMMAND msg;
+  drive_ros_msgs::mav_cc16_CONTROL_COMMAND msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   msg.velocity = getRandFloat();
@@ -137,7 +164,7 @@ bool sendControlCommand()
 
 bool sendControlLights()
 {
-  drive_ros_mavlink_cc2016::CONTROL_LIGHTS msg;
+  drive_ros_msgs::mav_cc16_CONTROL_LIGHTS msg;
   msg.sysid = getRand();
   msg.compid = getRand();
   for(int i = 0; i < 15; i++)
@@ -159,14 +186,14 @@ bool sendControlLights()
 
 void initPublisher(ros::NodeHandle &n)
 {
-  publisherConfigParamSetBool = n.advertise<drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_BOOL>("/to_mav/config_param_set_bool", 10);
-  publisherConfigParamSetFloat = n.advertise<drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_FLOAT>("/to_mav/config_param_set_float", 10);
-  publisherConfigParamSetInt = n.advertise<drive_ros_mavlink_cc2016::CONFIG_PARAM_SET_INT>("/to_mav/config_param_set_int", 10);
-  publisherConfigRequestCount = n.advertise<drive_ros_mavlink_cc2016::CONFIG_REQUEST_COUNT>("/to_mav/config_request_count", 10);
-  publisherConfigRequestParams = n.advertise<drive_ros_mavlink_cc2016::CONFIG_REQUEST_PARAMS>("/to_mav/config_request_params", 10);
-  publisherConfigRequest = n.advertise<drive_ros_mavlink_cc2016::CONFIG_REQUEST>("/to_mav/request", 10);
-  publisherControlCommand = n.advertise<drive_ros_mavlink_cc2016::CONTROL_COMMAND>("/to_mav/control_command", 10);
-  publisherControlLights = n.advertise<drive_ros_mavlink_cc2016::CONTROL_LIGHTS>("/to_mav/control_lights", 10);
+  publisherConfigParamSetBool = n.advertise<drive_ros_msgs::mav_cc16_CONFIG_PARAM_SET_BOOL>("/to_mav/config_param_set_bool", 10);
+  publisherConfigParamSetFloat = n.advertise<drive_ros_msgs::mav_cc16_CONFIG_PARAM_SET_FLOAT>("/to_mav/config_param_set_float", 10);
+  publisherConfigParamSetInt = n.advertise<drive_ros_msgs::mav_cc16_CONFIG_PARAM_SET_INT>("/to_mav/config_param_set_int", 10);
+  publisherConfigRequestCount = n.advertise<drive_ros_msgs::mav_cc16_CONFIG_REQUEST_COUNT>("/to_mav/config_request_count", 10);
+  publisherConfigRequestParams = n.advertise<drive_ros_msgs::mav_cc16_CONFIG_REQUEST_PARAMS>("/to_mav/config_request_params", 10);
+  publisherConfigRequest = n.advertise<drive_ros_msgs::mav_cc16_CONFIG_REQUEST>("/to_mav/request", 10);
+  publisherControlCommand = n.advertise<drive_ros_msgs::mav_cc16_CONTROL_COMMAND>("/to_mav/control_command", 10);
+  publisherControlLights = n.advertise<drive_ros_msgs::mav_cc16_CONTROL_LIGHTS>("/to_mav/control_lights", 10);
 }
 
 int main(int argc, char **argv) {
